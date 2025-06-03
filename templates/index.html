@@ -70,7 +70,21 @@
           return;
         }
 
-        events.forEach(event => {
+        // Filter events within the last 15 seconds
+        const freshnessWindow = 15 * 1000; // 15 seconds in ms
+        const now = Date.now();
+
+        const freshEvents = events.filter(event => {
+          const eventTime = new Date(event.timestamp).getTime();
+          return (now - eventTime) <= freshnessWindow;
+        });
+
+        if (freshEvents.length === 0) {
+          tbody.innerHTML = '<tr><td class="no-data" colspan="4">No recent events found</td></tr>';
+          return;
+        }
+
+        freshEvents.forEach(event => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${event.repository || 'N/A'}</td>
