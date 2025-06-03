@@ -49,7 +49,7 @@ This repository contains a Flask-based webhook server that listens for GitHub we
 
 ## Running the Server
 
-```bash
+```bash ```
 python app.py
 
 ## The server will start on http://localhost:5000.
@@ -57,14 +57,14 @@ python app.py
 ## Testing
 You can manually POST test webhook events using tools like curl or Invoke-RestMethod in PowerShell:
 
-bash
+```bash
 Copy
 curl.exe -X POST http://localhost:5000/webhook -H "Content-Type: application/json" -d "{\"repository\": {\"full_name\": \"test/repo\"}, \"action\": \"test_event\", \"sender\": {\"login\": \"tester\"}}"
 Access the UI in your browser at http://localhost:5000/ to see received events.
 
 For live webhook testing, configure your GitHub repository to send events to your public URL (using ngrok or hosted deployment).
-
-Notes
+```
+### Notes
 Timestamp of events is stored and displayed in UTC.
 
 The frontend currently displays all events without filtering for freshness; you can enable filtering in index.html.
@@ -73,5 +73,5 @@ To highlight merge events distinctly, the UI styles and display logic have been 
 
 For local development behind NAT/firewalls, tools like ngrok are recommended to expose your local server publicly.
 
-Author
-Tejas Koli
+### Author
+## Tejas Koli
