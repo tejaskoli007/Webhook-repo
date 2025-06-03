@@ -21,11 +21,21 @@ def webhook():
         
         data = request.get_json()
         timestamp = datetime.datetime.utcnow()  # Store as datetime object
-        
+
+        # Check if this is a pull request merge event
+        if data.get("action") == "closed" and data.get("pull_request", {}).get("merged") is True:
+            event_type = "pull_request_merged"
+            repository = data.get("repository", {}).get("full_name", "unknown")
+            author = data.get("sender", {}).get("login", "unknown")
+        else:
+            event_type = data.get("action", "unknown")
+            repository = data.get("repository", {}).get("full_name", "unknown")
+            author = data.get("sender", {}).get("login", "unknown")
+
         event_doc = {
-            "author": data.get("sender", {}).get("login", "unknown"),
-            "event_type": data.get("action", "unknown"),
-            "repository": data.get("repository", {}).get("full_name", "unknown"),
+            "author": author,
+            "event_type": event_type,
+            "repository": repository,
             "timestamp": timestamp
         }
         
