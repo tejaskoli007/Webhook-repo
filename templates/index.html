@@ -70,8 +70,9 @@
           return;
         }
 
-        // Filter events within the last 15 seconds
-        const freshnessWindow = 15 * 1000; // 15 seconds in ms
+        // Commenting out filtering to show all events
+        /*
+        const freshnessWindow = 60 * 1000; // 60 seconds in ms
         const now = Date.now();
 
         const freshEvents = events.filter(event => {
@@ -83,8 +84,10 @@
           tbody.innerHTML = '<tr><td class="no-data" colspan="4">No recent events found</td></tr>';
           return;
         }
+        */
 
-        freshEvents.forEach(event => {
+        // Show all events instead of filtered ones
+        events.forEach(event => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${event.repository || 'N/A'}</td>
