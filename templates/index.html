@@ -38,6 +38,14 @@
       padding: 20px;
       color: #666;
     }
+    /* Style for merge event rows */
+    .merge-event {
+      background-color: #d4edda; /* light green */
+      font-weight: bold;
+    }
+    .merge-event td {
+      color: #155724; /* dark green text */
+    }
   </style>
 </head>
 <body>
@@ -70,25 +78,15 @@
           return;
         }
 
-        // Commenting out filtering to show all events
-        /*
-        const freshnessWindow = 60 * 1000; // 60 seconds in ms
-        const now = Date.now();
-
-        const freshEvents = events.filter(event => {
-          const eventTime = new Date(event.timestamp).getTime();
-          return (now - eventTime) <= freshnessWindow;
-        });
-
-        if (freshEvents.length === 0) {
-          tbody.innerHTML = '<tr><td class="no-data" colspan="4">No recent events found</td></tr>';
-          return;
-        }
-        */
-
-        // Show all events instead of filtered ones
+        // Show all events
         events.forEach(event => {
           const tr = document.createElement('tr');
+
+          // Add special class for merge events
+          if(event.event_type === 'pull_request_merged') {
+            tr.classList.add('merge-event');
+          }
+
           tr.innerHTML = `
             <td>${event.repository || 'N/A'}</td>
             <td>${event.event_type || 'N/A'}</td>
