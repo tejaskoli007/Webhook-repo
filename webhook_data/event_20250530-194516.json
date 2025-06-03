@@ -1,0 +1,9 @@
+{
+    "repository": {
+        "full_name": "test/repo"
+    },
+    "action": "test_event",
+    "sender": {
+        "login": "tester"
+    }
+}
