@@ -93,7 +93,7 @@
             <td>${event.repository || 'N/A'}</td>
             <td>${event.event_type || 'N/A'}</td>
             <td>${event.author || 'N/A'}</td>
-            <td>${new Date(event.timestamp).toLocaleString() || 'N/A'}</td>
+            <td>${new Date(event.timestamp).toLocaleString(undefined, { timeZoneName: 'short' }) || 'N/A'}</td>
           `;
           tbody.appendChild(tr);
         });
