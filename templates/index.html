@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Webhook Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+      text-transform: uppercase;
+    }
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .no-data {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Webhook Events</h1>
+  <table id="eventsTable">
+    <thead>
+      <tr>
+        <th>Repository</th>
+        <th>Event Type</th>
+        <th>Sender</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="no-data" colspan="4">Loading events...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    async function fetchEvents() {
+      try {
+        const response = await fetch('/api/events');
+        const events = await response.json();
+
+        const tbody = document.querySelector('#eventsTable tbody');
+        tbody.innerHTML = ''; // Clear loading or old data
+
+        if (events.length === 0) {
+          tbody.innerHTML = '<tr><td class="no-data" colspan="4">No events found</td></tr>';
+          return;
+        }
+
+        events.forEach(event => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${event.repository || 'N/A'}</td>
+            <td>${event.event_type || 'N/A'}</td>
+            <td>${event.author || 'N/A'}</td>
+            <td>${new Date(event.timestamp).toLocaleString() || 'N/A'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        const tbody = document.querySelector('#eventsTable tbody');
+        tbody.innerHTML = `<tr><td class="no-data" colspan="4">Error loading events</td></tr>`;
+        console.error('Error fetching events:', error);
+      }
+    }
+
+    fetchEvents();
+    setInterval(fetchEvents, 10000); // Refresh every 10 seconds
+  </script>
+</body>
+</html>
