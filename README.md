@@ -74,8 +74,8 @@ To highlight merge events distinctly, the UI styles and display logic have been 
 For local development behind NAT/firewalls, tools like ngrok are recommended to expose your local server publicly.
 
 
-### Action Repo repository contains the GitHub Actions workflow configuration to simulate webhook events for testing the webhook server.
-https://github.com/tejaskoli007/Action-repo
+### [Action Repo] (https://github.com/tejaskoli007/Action-repo) repository contains the GitHub Actions workflow configuration to simulate webhook events for testing the webhook server.
+
 
 ### Author
 ## Tejas Koli
